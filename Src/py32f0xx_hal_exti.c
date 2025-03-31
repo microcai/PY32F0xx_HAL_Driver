@@ -72,8 +72,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -404,7 +412,7 @@ HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_Call
   * @brief  Store line number as handle private field.
   * @param  hexti Exti handle.
   * @param  ExtiLine Exti line number.
-  *         This parameter can be from 0 to @ref EXTI_LINE_NB.
+  *         This parameter can be a value of @ref EXTI_Line.
   * @retval HAL Status.
   */
 HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine)
@@ -502,10 +510,6 @@ uint32_t HAL_EXTI_GetPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
 /**
   * @brief  Clear interrupt pending bit of a dedicated line.
   * @param  hexti Exti handle.
-  * @param  Edge Specify which pending edge as to be clear.
-  *         This parameter can be one of the following values:
-  *           @arg @ref EXTI_TRIGGER_RISING_FALLING
-  *         This parameter is kept for compatibility with other series.
   * @retval None.
   */
 void HAL_EXTI_ClearPending(EXTI_HandleTypeDef *hexti)
@@ -562,4 +566,4 @@ void HAL_EXTI_GenerateSWI(EXTI_HandleTypeDef *hexti)
   * @}
   */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya *****END OF FILE****/

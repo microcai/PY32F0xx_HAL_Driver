@@ -6,8 +6,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -192,10 +200,10 @@ typedef struct
 /** @defgroup SPI_LL_EC_TRANSFER_MODE Transfer Mode
   * @{
   */
-#define LL_SPI_FULL_DUPLEX                 0x00000000U                          /*!< Full-Duplex mode. Rx and Tx transfer on 2 lines */
-#define LL_SPI_SIMPLEX_RX                  (SPI_CR1_RXONLY)                     /*!< Simplex Rx mode.  Rx transfer only on 1 line    */
-#define LL_SPI_HALF_DUPLEX_RX              (SPI_CR1_BIDIMODE)                   /*!< Half-Duplex Rx mode. Rx transfer on 1 line      */
-#define LL_SPI_HALF_DUPLEX_TX              (SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE)  /*!< Half-Duplex Tx mode. Tx transfer on 1 line      */
+#define LL_SPI_FULL_DUPLEX                 0x00000000U                          /*!< Full-duplex communication or Simplex communication Transmit-only mode */
+#define LL_SPI_SIMPLEX_RX                  (SPI_CR1_RXONLY)                     /*!< Simplex communication Receive-only mode    */
+#define LL_SPI_HALF_DUPLEX_RX              (SPI_CR1_BIDIMODE)                   /*!< Half-duplex communication Rx mode      */
+#define LL_SPI_HALF_DUPLEX_TX              (SPI_CR1_BIDIMODE | SPI_CR1_BIDIOE)  /*!< Half-duplex communication Tx mode      */
 /**
   * @}
   */
@@ -251,17 +259,20 @@ typedef struct
 #define LL_SPI_TX_FIFO_HALF_FULL           (SPI_SR_FTLVL_1)                  /*!< FIFO transmission 1/2   */
 #define LL_SPI_TX_FIFO_FULL                (SPI_SR_FTLVL_1 | SPI_SR_FTLVL_0) /*!< FIFO transmission full  */
 
+/**
+  * @}
+  */
+
 #if (defined(DMA1) || defined(DMA))
 /** @defgroup SPI_LL_EC_DMA_PARITY DMA Parity
   * @{
   */
 #define LL_SPI_DMA_PARITY_EVEN             0x00000000U   /*!< Select DMA parity Even */
 #define LL_SPI_DMA_PARITY_ODD              0x00000001U   /*!< Select DMA parity Odd  */
-#endif /* DMA1 or DMA */
-
 /**
   * @}
   */
+#endif /* DMA1 or DMA */
 
 /** @defgroup SPI_LL_EC_SLAVE_SPEED_MODE SLAVE SPEED MODE
   * @{
@@ -1044,11 +1055,10 @@ __STATIC_INLINE uint32_t LL_SPI_DMA_GetRegAddr(SPI_TypeDef *SPIx)
 {
   return (uint32_t) & (SPIx->DR);
 }
-#endif /* DMA1 or DMA */
-
 /**
   * @}
   */
+#endif /* DMA1 or DMA */
 
 /** @defgroup SPI_LL_EF_DATA_Management DATA Management
   * @{
@@ -1172,4 +1182,4 @@ void        LL_SPI_StructInit(LL_SPI_InitTypeDef *SPI_InitStruct);
 
 #endif /* PY32F0xx_LL_SPI_H */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya *****END OF FILE****/

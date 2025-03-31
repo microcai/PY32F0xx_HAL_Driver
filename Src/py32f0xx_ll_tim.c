@@ -6,8 +6,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -26,12 +34,12 @@
 #include "py32f0xx_ll_bus.h"
 
 #ifdef  USE_FULL_ASSERT
-#include "air_assert.h"
+#include "py32_assert.h"
 #else
 #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
 
-/** @addtogroup PY32F0XX_LL_Driver
+/** @addtogroup PY32F0xx_LL_Driver
   * @{
   */
 
@@ -267,8 +275,8 @@ ErrorStatus LL_TIM_DeInit(TIM_TypeDef *TIMx)
 #if defined(TIM14)
   else if (TIMx == TIM14)
   {
-    LL_APB1_GRP1_ForceReset(LL_APB1_GRP2_PERIPH_TIM14);
-    LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP2_PERIPH_TIM14);
+    LL_APB1_GRP2_ForceReset(LL_APB1_GRP2_PERIPH_TIM14);
+    LL_APB1_GRP2_ReleaseReset(LL_APB1_GRP2_PERIPH_TIM14);
   }
 #endif
 #if defined(TIM15)
@@ -1198,4 +1206,4 @@ static ErrorStatus IC4Config(TIM_TypeDef *TIMx, LL_TIM_IC_InitTypeDef *TIM_ICIni
 
 #endif /* USE_FULL_LL_DRIVER */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co.  *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya  *****END OF FILE****/

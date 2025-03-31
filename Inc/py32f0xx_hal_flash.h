@@ -6,8 +6,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -117,15 +125,11 @@ typedef struct
   * @{
   */
 
-/**
-  * @}
-  */
-
 /** @defgroup FLASH_Latency FLASH Latency
   * @{
   */
-#define FLASH_LATENCY_0                 0x00000000UL                                /*!< FLASH Zero wait state */
-#define FLASH_LATENCY_1                 FLASH_ACR_LATENCY                        /*!< FLASH One wait state */
+#define FLASH_LATENCY_0                 0x00000000UL       /*!< FLASH Zero wait state */
+#define FLASH_LATENCY_1                 FLASH_ACR_LATENCY  /*!< FLASH One wait state */
 /**
   * @}
   */
@@ -133,9 +137,9 @@ typedef struct
 /** @defgroup FLASH_Type_Erase FLASH erase type
   * @{
   */
-#define FLASH_TYPEERASE_MASSERASE       (0x01U)  /*!<Flash mass erase activation*/
-#define FLASH_TYPEERASE_PAGEERASE       (0x02U)  /*!<Flash Pages erase activation*/
-#define FLASH_TYPEERASE_SECTORERASE     (0x03U)
+#define FLASH_TYPEERASE_MASSERASE       FLASH_CR_MER  /*!<Flash mass erase activation*/
+#define FLASH_TYPEERASE_PAGEERASE       FLASH_CR_PER  /*!<Flash Pages erase activation*/
+#define FLASH_TYPEERASE_SECTORERASE     FLASH_CR_SER  /*!<Flash Sector erase activation*/
 /**
   * @}
   */
@@ -237,9 +241,6 @@ typedef struct
 /**
   * @}
   */
-/**
-  * @}
-  */
 
 /** @defgroup FLASH_OB_USER_Type FLASH User Option Type
   * @{
@@ -266,7 +267,7 @@ typedef struct
 /** @defgroup FLASH_Type_Program FLASH type program
   * @{
   */
-#define FLASH_TYPEPROGRAM_PAGE       (0x01U)  /*!<Program 128bytes at a specified address.*/
+#define FLASH_TYPEPROGRAM_PAGE       FLASH_CR_PG  /*!<Program 128bytes at a specified address.*/
 /**
   * @}
   */
@@ -340,11 +341,10 @@ typedef struct
 
 #define OB_WWDG_SW                     FLASH_OPTR_WWDG_SW  /*!< Software WWDG selected */
 #define OB_WWDG_HW                     0x00000000U         /*!< Hardware WWDG selected */
-#endif
-
 /**
   * @}
   */
+#endif
 
 /** @defgroup FLASH_OB_USER_RESET_CONFIG FLASH Option Bytes User reset config bit
   * @{
@@ -448,9 +448,6 @@ typedef struct
   */
 #define __HAL_FLASH_CLEAR_FLAG(__FLAG__)                do {  WRITE_REG(FLASH->SR, (__FLAG__)); \
                                                            } while(0U)
-/**
-  * @}
-  */
 
 #define __HAL_FLASH_TIME_REG_SET(__EPPARA0__,__EPPARA1__,__EPPARA2__,__EPPARA3__,__EPPARA4__)           \
                                                         do {                                            \
@@ -486,6 +483,14 @@ typedef struct
                                                                            (*(uint32_t *)(_FlashTimmingParam[tmpreg]+16)));  \
                                                 }                                                                            \
                                               }while(0U)
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /* Include FLASH HAL Extended module */
 /* Exported variables --------------------------------------------------------*/
@@ -550,15 +555,6 @@ uint32_t HAL_FLASH_GetError(void);
   * @}
   */
 
-/**
-  * @}
-  */
-
-/* Private types --------------------------------------------------------*/
-/** @defgroup FLASH_Private_types FLASH Private Types
-  * @{
-  */
-HAL_StatusTypeDef  FLASH_WaitForLastOperation(uint32_t Timeout);
 /**
   * @}
   */
@@ -655,4 +651,4 @@ HAL_StatusTypeDef  FLASH_WaitForLastOperation(uint32_t Timeout);
 
 #endif /* __PY32F0xx_HAL_FLASH_H */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya *****END OF FILE****/

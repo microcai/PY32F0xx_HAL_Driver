@@ -6,8 +6,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -113,8 +121,7 @@ extern "C" {
 #define IS_RCC_PLL(__PLL__)               (((__PLL__) == RCC_PLL_NONE) ||((__PLL__) == RCC_PLL_OFF) || \
                                            ((__PLL__) == RCC_PLL_ON))
 
-#define IS_RCC_PLLSOURCE(__SOURCE__)      (((__SOURCE__) == RCC_PLLSOURCE_NONE) || \
-                                           ((__SOURCE__) == RCC_PLLSOURCE_HSI)  || \
+#define IS_RCC_PLLSOURCE(__SOURCE__)      (((__SOURCE__) == RCC_PLLSOURCE_HSI)  || \
                                            ((__SOURCE__) == RCC_PLLSOURCE_HSE))
 #endif
                                          
@@ -342,8 +349,6 @@ typedef struct
   */
 #define RCC_HSI_OFF                    0x00000000U            /*!< HSI clock deactivation */
 #define RCC_HSI_ON                     RCC_CR_HSION           /*!< HSI clock activation */
-
-#define RCC_HSICALIBRATION_DEFAULT       (0x10U)         /* Default HSI calibration trimming value */
 /**
   * @}
   */
@@ -403,7 +408,6 @@ typedef struct
 /** @defgroup RCC_PLL_Clock_Source PLL Clock Source
   * @{
   */
-#define RCC_PLLSOURCE_NONE             0x00000000U             /*!< No clock selected as PLL entry clock source  */
 #define RCC_PLLSOURCE_HSI              RCC_PLLCFGR_PLLSRC_HSI  /*!< HSI clock selected as PLL entry clock source */
 #define RCC_PLLSOURCE_HSE              RCC_PLLCFGR_PLLSRC_HSE  /*!< HSE clock selected as PLL entry clock source */
 /**
@@ -489,7 +493,7 @@ typedef struct
 #define RCC_RTCCLKSOURCE_LSE           RCC_BDCR_RTCSEL_0      /*!< LSE oscillator clock used as RTC clock */
 #endif
 #define RCC_RTCCLKSOURCE_LSI           RCC_BDCR_RTCSEL_1      /*!< LSI oscillator clock used as RTC clock */
-#define RCC_RTCCLKSOURCE_HSE_DIV128    RCC_BDCR_RTCSEL        /*!< HSE oscillator clock divided by 32 used as RTC clock */
+#define RCC_RTCCLKSOURCE_HSE_DIV128    RCC_BDCR_RTCSEL        /*!< HSE oscillator clock divided by 128 used as RTC clock */
 /**
   * @}
   */
@@ -1218,27 +1222,6 @@ typedef struct
   * @}
   */
 
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
 /** @defgroup RCC_Backup_Domain_Reset RCC Backup Domain Reset
   * @{
   */
@@ -1421,10 +1404,10 @@ typedef struct
                         CLEAR_BIT(RCC->BDCR, RCC_BDCR_LSEBYP); \
                       }                                        \
                     } while(0U)
+#endif
 /**
   * @}
   */
-#endif
 
 #if defined(RTC)
 /** @addtogroup RCC_RTC_Clock_Configuration
@@ -1445,7 +1428,7 @@ typedef struct
   *            @arg @ref RCC_RTCCLKSOURCE_NONE No clock selected as RTC clock.
   *            @arg @ref RCC_RTCCLKSOURCE_LSE  LSE selected as RTC clock.
   *            @arg @ref RCC_RTCCLKSOURCE_LSI  LSI selected as RTC clock.
-  *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV32  HSE clock divided by 32 selected
+  *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV128  HSE clock divided by 128 selected
   *
   * @note   If the LSE or LSI is used as RTC clock source, the RTC continues to
   *         work in STOP and STANDBY modes, and can be used as wakeup source.
@@ -1464,7 +1447,7 @@ typedef struct
   *            @arg @ref RCC_RTCCLKSOURCE_NONE No clock selected as RTC clock.
   *            @arg @ref RCC_RTCCLKSOURCE_LSE  LSE selected as RTC clock.
   *            @arg @ref RCC_RTCCLKSOURCE_LSI  LSI selected as RTC clock.
-  *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV32  HSE clock divided by 32 selected
+  *            @arg @ref RCC_RTCCLKSOURCE_HSE_DIV128  HSE clock divided by 128 selected
   */
 #define  __HAL_RCC_GET_RTC_SOURCE() ((uint32_t)(READ_BIT(RCC->BDCR, RCC_BDCR_RTCSEL)))
 
@@ -1481,11 +1464,12 @@ typedef struct
   * @}
   */
 #endif
-  
-#if defined(RCC_PLL_SUPPORT)
+
 /** @addtogroup RCC_Clock_Configuration
   * @{
   */
+
+#if defined(RCC_PLL_SUPPORT)
 
 #define __HAL_RCC_PLL_ENABLE()         SET_BIT(RCC->CR, RCC_CR_PLLON)
 
@@ -1495,7 +1479,6 @@ typedef struct
   * @note   This function must be used only when the main PLL is disabled.
   * @param  __PLLSOURCE__  specifies the PLL entry clock source.
   *         This parameter can be one of the following values:
-  *            @arg @ref RCC_PLLSOURCE_NONE  No clock selected as PLL clock entry
   *            @arg @ref RCC_PLLSOURCE_HSI  HSI oscillator clock selected as PLL clock entry
   *            @arg @ref RCC_PLLSOURCE_HSE  HSE oscillator clock selected as PLL clock entry
   * @retval None
@@ -1507,7 +1490,6 @@ typedef struct
 /** @brief  Macro to get the oscillator used as PLL clock source.
   * @retval The oscillator used as PLL clock source. The returned value can be one
   *         of the following:
-  *              @arg @ref RCC_PLLSOURCE_NONE No oscillator is used as PLL clock source.
   *              @arg @ref RCC_PLLSOURCE_HSI HSI oscillator is used as PLL clock source.
   *              @arg @ref RCC_PLLSOURCE_HSE HSE oscillator is used as PLL clock source.
   */
@@ -1760,4 +1742,4 @@ void              HAL_RCC_CSSCallback(void);
 
 #endif /* __PY32F0xx_HAL_RCC_H */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya *****END OF FILE****/

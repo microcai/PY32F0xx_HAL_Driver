@@ -11,8 +11,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -307,7 +315,7 @@ void HAL_PWR_DisablePVD(void)
 
 /**
   * @brief  Configure LPR voltage,sram retention voltage,and wakeup correlation
-            timing in Sto mode.
+            timing in Stop mode.
   * @param  sStopModeConfig pointer to a PWR_StopModeConfigTypeDef structure that
             contains the Stop mode configuration information.
   * @retval HAL_OK
@@ -322,8 +330,9 @@ HAL_StatusTypeDef HAL_PWR_ConfigStopMode(PWR_StopModeConfigTypeDef *sStopModeCon
   assert_param(IS_PWR_WAKEUP_FLASH_DELAY(sStopModeConfig->FlashDelay));
 
   /* Set the STOP mode and STOP wake-up timing related configurations */
-  MODIFY_REG(PWR->CR1, (PWR_CR1_VOS | PWR_CR1_MRRDY_TIME | PWR_CR1_HSION_CTRL | PWR_CR1_SRAM_RETV | PWR_CR1_SRAM_RETV), 
+  MODIFY_REG(PWR->CR1, (PWR_CR1_VOS | PWR_CR1_MRRDY_TIME | PWR_CR1_HSION_CTRL | PWR_CR1_SRAM_RETV | PWR_CR1_FLS_SLPTIME), 
                        (sStopModeConfig->LPVoltSelection) | \
+                       (sStopModeConfig->WakeUpHsiEnableTime) | \
                        (sStopModeConfig->RegulatorSwitchDelay) | \
                        (sStopModeConfig->SramRetentionVolt) | \
                        (sStopModeConfig->FlashDelay));
@@ -573,4 +582,4 @@ __weak void HAL_PWR_PVD_Callback(void)
   * @}
   */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya *****END OF FILE****/

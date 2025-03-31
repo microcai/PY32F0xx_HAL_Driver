@@ -204,8 +204,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -2141,6 +2149,14 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
     }
     return;
   } /* End if some error occurs */
+  
+  /* Idle frame detect */
+  if (((isrflags & USART_SR_IDLE) != RESET) && ((cr1its & USART_CR1_IDLEIE) != RESET))
+  {
+    __HAL_UART_CLEAR_IDLEFLAG(huart);
+    
+    HAL_UART_IdleFrameDetectCpltCallback(huart);
+  }
 
   /* UART in mode Transmitter ------------------------------------------------*/
   if (((isrflags & USART_SR_TXE) != RESET) && ((cr1its & USART_CR1_TXEIE) != RESET))
@@ -2274,6 +2290,21 @@ __weak void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart)
 
   /* NOTE : This function should not be modified, when the callback is needed,
             the HAL_UART_AbortReceiveCpltCallback can be implemented in the user file.
+   */
+}
+
+/**
+  * @brief  UART Idle Frame Detect Complete callback.
+  * @param  huart UART handle.
+  * @retval None
+  */
+__weak void HAL_UART_IdleFrameDetectCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(huart);
+
+  /* NOTE : This function should not be modified, when the callback is needed,
+            the HAL_UART_IdleFrameDetectCpltCallback can be implemented in the user file.
    */
 }
 
@@ -2511,12 +2542,12 @@ uint32_t HAL_UART_GetError(UART_HandleTypeDef *huart)
   * @{
   */
 
+#if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
 /**
   * @brief  Initialize the callbacks to their default values.
   * @param  huart UART handle.
   * @retval none
   */
-#if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
 void UART_InitCallbacksToDefault(UART_HandleTypeDef *huart)
 {
   /* Init the UART Callback settings */
@@ -3170,4 +3201,4 @@ void UART_AdvFeatureConfig(UART_HandleTypeDef *huart)
   * @}
   */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya *****END OF FILE****/

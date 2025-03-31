@@ -6,8 +6,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) Puya Semiconductor Co..
+  * <h2><center>&copy; Copyright (c) 2023 Puya Semiconductor Co.
   * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by Puya under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -25,7 +33,7 @@
 #include "py32f0xx_ll_led.h"
 #include "py32f0xx_ll_bus.h"
 #ifdef  USE_FULL_ASSERT
-  #include "air_assert.h"
+  #include "py32_assert.h"
 #else
   #define assert_param(expr) ((void)0U)
 #endif
@@ -45,7 +53,7 @@
 /* Private constants ---------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
 
-/** @addtogroup LED_LL_Private_Macros
+/** @defgroup LED_LL_Private_Macros LED Private Macros
   * @{
   */
 #define IS_LL_LED_COM_DRIVE(__VALUE__)      (((__VALUE__) == LL_LED_COMDRIVE_LOW)     ||\
@@ -150,9 +158,25 @@ void LL_LED_StructInit(LL_LED_InitTypeDef *LED_InitStruct)
   LED_InitStruct->DeadTime = 0x0u;
 }
 
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
 #endif /* defined (LED) */
 
+/**
+  * @}
+  */
 
 #endif /* USE_FULL_LL_DRIVER */
 
-/************************ (C) COPYRIGHT Puya Semiconductor Co. *****END OF FILE****/
+/************************ (C) COPYRIGHT Puya Semiconductor *****END OF FILE****/
